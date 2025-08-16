@@ -1,0 +1,15 @@
+{# Yellowbrick-specific SQL macro overrides. #}
+{% import 'splink/internals/postgres/sql/macros.sql.jinja' as pg %}
+
+{% macro cast_to_boolean(col) -%}
+  ({{ col }}::boolean)
+{%- endmacro %}
+
+{% macro create_temp_table(table_name, select_sql) -%}
+  create temporary table {{ table_name }} on commit preserve rows as
+  {{ select_sql }}
+{%- endmacro %}
+
+{% macro regex_match(text_expr, pattern_expr) -%}
+  ({{ text_expr }} ~ {{ pattern_expr }})
+{%- endmacro %}
